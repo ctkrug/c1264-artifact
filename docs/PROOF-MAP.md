@@ -42,7 +42,7 @@ assumed exact coverage would be wrong.
 | Root orbits 0–2 are exactly the 210 blocks through point 1 | `tests/test_structure.py::test_first_three_root_orbits_are_exactly_the_blocks_through_point_one` | seconds |
 | Secondary and tertiary orbits partition their eligible domains | `tests/test_structure.py` (parametrised over all 6 roots) | seconds |
 
-## 3. The encoder — the trust root
+## 3. The encoder
 
 `src/c1264/encode.py` is the only place a mathematical claim becomes a file. If it
 is wrong, every certificate certifies the wrong thing, so it gets its own checks:
@@ -54,21 +54,15 @@ is wrong, every certificate certifies the wrong thing, so it gets its own checks
 | A node built under either translation states the *same* problem | `bin/check_encoding_provenance.py` — equal `non_cardinality_core_sha256`, unequal file hashes | ~3 min |
 | The coverage/degree segments occupy disjoint auxiliary variable ranges | assertions inside `encode.build_cnf` and `extend.build_extension` | per build |
 
-Together these remove PySAT from the trust root. `make cross-check` re-derives
-every one of the 81 deposited instances, byte for byte, from an implementation
-written directly from Sinz's 2005 paper with no PySAT dependency, and finds
-PySAT's 80,360 cardinality clauses clause-for-clause identical to it
-(`verify/README.md`, `build/cross-check.json`). No conclusion in this artifact
-rests on PySAT being correct: a library defect would have to be reproduced
-independently, clause for clause, by a second implementation that shares no
-code with it.
+`make cross-check` re-derives every one of the 81 deposited instances, byte for
+byte, from an implementation written directly from Sinz's 2005 paper with no
+PySAT dependency, and finds the 80,360 cardinality clauses clause-for-clause
+identical (`verify/README.md`, `build/cross-check.json`).
 
-What the machines delegate to the reader is exactly one step: that the coverage
-clauses, the degree targets and the residual bounds state the intended
-combinatorial claim. That step is checked deliberately and redundantly — §2
-pins the combinatorial structure with brute-force ground truth, §5–6 pin the
-case analysis — and `src/c1264/encode.py`, the ~200-line module where claim
-becomes clause, is written to be read end to end.
+The translation from combinatorial claim to clauses is checked by §2 (the
+combinatorial structure, against brute-force ground truth) and §5–6 (the case
+analysis), and `src/c1264/encode.py`, the ~200-line module where claim becomes
+clause, is written to be read end to end.
 
 ## 4. Lower bound, Layer A: the 47-node case tree
 
@@ -162,7 +156,7 @@ partition; and the blockers are licensed. Tier 3 (`make certify`) re-derives the
 
 ## 8. Reading order for a referee with one hour
 
-1. `src/c1264/encode.py` — the trust root, ~200 lines. Everything else is scaffolding.
+1. `src/c1264/encode.py` — where claim becomes clause, ~200 lines. Everything else is scaffolding.
 2. `src/c1264/extend.py` module docstring — why Layer B is independent of Layer A.
 3. `./reproduce.sh` — run it; a few minutes.
 4. `make cross-check` — the same 81 instances rebuilt without PySAT; three minutes.

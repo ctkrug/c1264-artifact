@@ -105,8 +105,8 @@ step "encoding provenance"   "$PYTHON" bin/check_encoding_provenance.py --out "$
 # --- tier 2b --------------------------------------------------------------
 # Rebuilds the same 81 instances a second time with no PySAT in the chain.  It
 # roughly doubles the runtime of this script, so it can be skipped -- but it is
-# the check that removes an unverified third-party library from the trust root,
-# so it is on by default.
+# the check that rebuilds every instance with no PySAT in the chain, so it is on
+# by default.
 if [ "${SKIP_CROSS_CHECK:-0}" = "1" ]; then
   echo "    note: SKIP_CROSS_CHECK=1; skipping the clean-room encoder cross-check" | tee -a "$LOG"
 else

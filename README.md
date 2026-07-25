@@ -39,7 +39,7 @@ here and in `make help` were measured on an Apple M-series laptop under CPython
 |---|---|---|---|
 | 1 | `make check` | ~2 min | `C(12,6,4) <= 41` completely; the group, the variable layout, the orbit partitions, and `CardEnc.equals` against ground truth |
 | 2 | `make regenerate` | ~10 min | all 81 CNF instances regenerate **byte for byte** from this source, so the deposited certificates apply to exactly these files; the case analysis is exhaustive; the blockers are orbit-closed and licensed |
-| 2b | `make cross-check` | ~3 min | the same 81 instances rebuilt a second time by a clean-room encoder that imports no PySAT, and byte-identical — removing the only third-party library from the trust root |
+| 2b | `make cross-check` | ~3 min | the same 81 instances rebuilt a second time by an independent encoder that imports no PySAT; byte-identical |
 | 3 | `make certify` | CPU-days, ~200 GB scratch | the 81 refutations themselves, from scratch |
 
 Tier 2 is the one that matters for a referee. A hash match there means the
@@ -96,7 +96,7 @@ Three things then have to be shown, and each is a layer of this artifact:
       group.py                C2 wr S5, order 3840; orbits of blocks
       blocks.py               the 462 primary variables and their layout
       orbits.py               root/secondary/tertiary orbit partitions; blocker parsing
-      encode.py               THE TRUST ROOT: (blocker, leaf) -> DIMACS
+      encode.py               (blocker, leaf) -> DIMACS; claim becomes clause
       auxiliary.py            the 14 exhaustiveness instances
       extend.py               Layer B: residual extension instances
       blocker.py              blocked-link recovery, orbit closure, canonical digests
@@ -168,18 +168,13 @@ pins it so it cannot be quietly lost.
   certificates certify. The certificates themselves are the proof of the lower
   bound, and every one of them is machine-checked by `cake_lpr`, a checker
   extracted from a HOL4 correctness proof.
-* PySAT is not in the trust root. Three independent checks pin the encoder:
-  `bin/encoder_sanity.py` brute-forces `CardEnc.equals` against ground truth;
-  the two-encoding provenance check shows both translations state the same
-  problem; and `make cross-check` re-derives all 81 instances byte for byte
-  from a clean-room sequential-counter encoder that imports no PySAT, finding
-  its 80,360 cardinality clauses clause-for-clause identical. Agreement, byte
-  for byte, between two implementations that share no code leaves no room for a
-  library defect to carry the theorem. The one step performed by humans rather
-  than machines — that the coverage clauses, degree targets and residual bounds
-  state the intended combinatorial claim — is checked deliberately and from
-  independent angles by §2 and §5–6 of `docs/PROOF-MAP.md`, and
-  `src/c1264/encode.py` (~200 lines) is written to be read end to end.
+* The encoder is checked three ways: `bin/encoder_sanity.py` brute-forces
+  `CardEnc.equals` against ground truth; `bin/check_encoding_provenance.py`
+  shows the two cardinality translations state the same problem; and
+  `make cross-check` rebuilds all 81 instances, byte for byte, with an
+  independent encoder that imports no PySAT. The translation from combinatorial
+  claim to clauses lives in one ~200-line file, `src/c1264/encode.py`, written
+  to be read end to end and checked by §2 and §5–6 of `docs/PROOF-MAP.md`.
 * The two designs proving the upper bound are prior art, not new here; the
   contribution is the lower bound.
 

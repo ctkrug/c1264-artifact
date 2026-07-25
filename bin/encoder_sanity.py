@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Brute-force the one library primitive the encoding trusts.
+"""Brute-force ``CardEnc.equals`` against ground truth.
 
 The encoder's only non-elementary step is PySAT's ``CardEnc.equals``.  This
 harness checks it semantically rather than structurally: for small ``(n, k)`` it

@@ -162,8 +162,10 @@ def test_the_manifest_is_not_stale():
     # The failure this catches: someone edits a deposited file, forgets
     # `make manifest`, and the very first step of the README quick start --
     # `shasum -c MANIFEST.sha256` -- reports a mismatch on a fresh clone.  Lines
-    # naming files under build/ belong to the archival bundle's longer manifest
-    # and are skipped when the tree has not been built.
+    # naming files under build/ belong to the archival bundle's longer manifest:
+    # they record the frozen run, are checked by `shasum -c` on extraction, and
+    # are rewritten by every reproduce.sh run -- including the run executing
+    # this test -- so they are never hashed here.
     import hashlib
 
     manifest = frontier.REPO_ROOT / "MANIFEST.sha256"
@@ -172,10 +174,11 @@ def test_the_manifest_is_not_stale():
     stale, missing = [], []
     for line in manifest.read_text().splitlines():
         digest, _, relative = line.partition("  ")
+        if relative.startswith("build/"):
+            continue
         path = frontier.REPO_ROOT / relative
         if not path.is_file():
-            if not relative.startswith("build/"):
-                missing.append(relative)
+            missing.append(relative)
             continue
         if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
             stale.append(relative)

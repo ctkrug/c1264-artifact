@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Rebuild all 81 instances with a clean-room encoder that does not use PySAT.
 
-``src/c1264/encode.py`` is the residual trust assumption of the lower bound: no
-machine checks the translation from the combinatorial claim into clauses, and one
-step of that translation -- the exact-degree cardinality constraint -- is
-delegated to a library (PySAT's ``CardEnc.equals`` with ``EncType.seqcounter``).
-This script removes the library from the loop.
+One step of ``src/c1264/encode.py`` -- the exact-degree cardinality constraint
+-- is delegated to a library (PySAT's ``CardEnc.equals`` with
+``EncType.seqcounter``).  This script rebuilds every instance with no PySAT in
+the loop and requires byte equality.
 
 ``verify/independent_seq_encoder.py`` is an independent implementation of the
 same published construction (Sinz, CP 2005, LNCS 3709 pp. 827-831), written

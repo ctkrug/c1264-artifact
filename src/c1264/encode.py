@@ -1,12 +1,12 @@
-"""The CNF encoder: the residual trust assumption of the proof.
+"""The CNF encoder: where the combinatorial claim becomes clauses.
 
 Read this file closely.  Everything downstream of it is machine-checked: the
 solver emits a DRAT proof, ``drat-trim`` checks it and converts it to LRAT, and
 ``cake_lpr`` -- a checker extracted from a HOL4 correctness proof via CakeML --
-checks the LRAT.  What no machine checks is the step performed *here*: the
-translation from the combinatorial claim about coverings into propositional
-clauses.  The paper says so explicitly, and this module is deliberately small,
-dependency-light and comment-heavy so that a referee can read it end to end.
+checks the LRAT.  The step performed *here* -- the translation from the
+combinatorial claim about coverings into propositional clauses -- is checked by
+reading, so this module is deliberately small, dependency-light and
+comment-heavy: a referee can read it end to end.
 
 Instance anatomy
 ----------------
@@ -30,8 +30,7 @@ The eleven equalities already force |L| = 20 (degree sum 100, block size 5), so
 adding a global cardinality constraint would be redundant.  Keeping the
 architecture per-point makes the encoding local and auditable: each clause
 group is a statement about one point, and ``bin/encoder_sanity.py`` brute-forces
-``CardEnc.equals`` against ground truth on small cases to check the one library
-primitive being trusted.
+``CardEnc.equals`` against ground truth on small cases.
 """
 
 from __future__ import annotations

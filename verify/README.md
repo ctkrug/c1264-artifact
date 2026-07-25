@@ -26,13 +26,10 @@ bytes the deposited certificates were issued against. It also compares PySAT's
 80,360 cardinality clauses against the clean-room ones clause by clause. Takes
 about three minutes; writes `build/cross-check.json`.
 
-Why this exists: `src/c1264/encode.py` is the artifact's declared trust root, and
-one step inside it — the exact-degree cardinality constraint — is delegated to
-`pysat.card.CardEnc.equals`. The cross-check removes that library from the chain
-entirely: byte-for-byte agreement between two implementations that share no code
-leaves no room for a PySAT-specific defect. The formalisation itself — that the
-clauses state the intended combinatorial claim — is checked separately and from
-independent angles; see `docs/PROOF-MAP.md` §2–3 and §5–6.
+Why this exists: one step inside `src/c1264/encode.py` — the exact-degree
+cardinality constraint — is delegated to `pysat.card.CardEnc.equals`. The
+cross-check rebuilds the same instances with no PySAT in the chain and requires
+byte equality. See `docs/PROOF-MAP.md` §2–3 and §5–6.
 
 ## 2. Archived — audit records from the campaign
 
