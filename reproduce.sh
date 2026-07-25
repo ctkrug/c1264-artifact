@@ -2,8 +2,10 @@
 # One-command reproduction of everything that does not need a SAT solver.
 #
 # This is the referee's entry point.  It runs the two cheap tiers in dependency
-# order, stops at the first failure, and prints a summary saying exactly which
-# claims of the paper are now checked on this machine and which are not.
+# order and prints a summary saying exactly which claims of the paper are now
+# checked on this machine and which are not.  A failing step does not abort the
+# run: each one is independent of the others, and a referee learns more from the
+# full tally plus the first 20 lines of the failure than from an early exit.
 #
 # The expensive tier -- solving all 81 instances and machine-checking the proofs
 # -- is deliberately NOT run here: it is CPU-days of work and needs roughly
@@ -38,10 +40,13 @@ TALLY="$OUT/reproduce-summary.tsv"
 
 step() {
   local label="$1"; shift
+  # SECONDS is a shell builtin in both bash and zsh.  The elapsed time is
+  # printed for calibration only -- it is not written to the tally.
+  local started=$SECONDS
   printf '\n=== %s\n' "$label" | tee -a "$LOG"
   printf '    $ %s\n' "$*" | tee -a "$LOG"
   if "$@" >>"$LOG" 2>&1; then
-    printf '    OK\n'
+    printf '    OK (%ss)\n' "$(( SECONDS - started ))"
     printf 'ok\t%s\n' "$label" >> "$TALLY"
   else
     printf '    FAILED (see %s)\n' "$LOG"

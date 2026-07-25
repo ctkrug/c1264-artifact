@@ -5,6 +5,21 @@ Tiers 1 and 2 (`./reproduce.sh`) need only Python and the pins in
 tools, none of which is bundled here. This page records the versions the deposited
 certificates were produced with, how to obtain them, and what tier 3 costs.
 
+## The interpreter
+
+Everything deposited here was produced with **CPython 3.14.6** on macOS
+(darwin/arm64). The source uses no syntax or standard-library feature newer than
+3.9 — no `match`, no `itertools.batched`, and `from __future__ import annotations`
+throughout — so an older interpreter should work, but only 3.14.6 has actually
+been exercised, and `python-sat==1.9.dev7` imposes its own floor.
+
+The interpreter version is *not* a variable the CNF hashes depend on. Those bytes
+come from PySAT's `CardEnc` and `CNF.to_file`, which is why `requirements.txt` is
+pinned exactly and the Python version is not. `make regenerate` and
+`bin/audit_blocker.py` have both been run under several `PYTHONHASHSEED` values
+and produce identical bytes, so nothing in the generators leaks set-iteration
+order into the output.
+
 ## The three tools
 
 | Tool | Version used | Role | Success line |

@@ -4,9 +4,10 @@
 about three minutes, which is too slow for a test suite that is meant to run in
 seconds.  What is tested here is the part a regression would break silently:
 
-* the clean-room sequential-counter encoder is *semantically* right, brute-forced
-  against ground truth on small ``(n, k)`` -- so agreement with PySAT means both
-  are right, not that both are wrong in the same way;
+* the clean-room sequential-counter encoder is *semantically* right, checked
+  against ground truth on small ``(n, k)`` by enumerating the primaries and
+  deciding the auxiliaries exactly -- so agreement with PySAT means both are
+  right, not that both are wrong in the same way;
 * it agrees with ``CardEnc.equals`` clause for clause on small ``(n, k)``;
 * the byte-level contract holds on two representative instances -- one extension
   node and the warm-up ``lb-c1042-8-deg3``, both cheap enough to rebuild here.
@@ -34,17 +35,63 @@ import cross_check_encoder as cross  # noqa: E402
 
 # --- the clean-room encoder is semantically correct ------------------------
 
+def satisfiable(clauses, assignment, nv):
+    """Exact DPLL: can ``assignment`` be extended to satisfy ``clauses``?
+
+    Unit propagation to fixpoint, then a branch on the first undecided variable.
+    Complete on any clause set, and the sequential counter's auxiliaries are
+    almost entirely determined by the primaries, so propagation does nearly all
+    the work and the search barely branches.
+    """
+    assignment = dict(assignment)
+    while True:
+        units = []
+        for clause in clauses:
+            unassigned, satisfied = [], False
+            for lit in clause:
+                value = assignment.get(abs(lit))
+                if value is None:
+                    unassigned.append(lit)
+                elif value == (lit > 0):
+                    satisfied = True
+                    break
+            if satisfied:
+                continue
+            if not unassigned:
+                return False  # a clause is falsified outright
+            if len(unassigned) == 1:
+                units.append(unassigned[0])
+        if not units:
+            break
+        for lit in units:
+            if assignment.setdefault(abs(lit), lit > 0) != (lit > 0):
+                return False  # two units demand opposite values
+
+    undecided = next((v for v in range(1, nv + 1) if v not in assignment), None)
+    if undecided is None:
+        return True
+    return any(
+        satisfiable(clauses, {**assignment, undecided: choice}, nv)
+        for choice in (True, False)
+    )
+
+
 def models(clauses, nv, primaries):
-    """Projections onto ``primaries`` of the assignments satisfying ``clauses``."""
-    accepted = set()
-    for bits in itertools.product((False, True), repeat=nv):
-        value = (False,) + bits  # 1-based
-        if all(any(value[abs(l)] == (l > 0) for l in clause) for clause in clauses):
-            accepted.add(tuple(bits[p - 1] for p in primaries))
-    return accepted
+    """Projections onto ``primaries`` of the assignments satisfying ``clauses``.
+
+    Sweeping all ``2**nv`` assignments is exact but hopeless -- a sequential
+    counter over ``(n, k) = (6, 3)`` already carries 24 variables, and that one
+    case cost four minutes.  Only the projection is wanted, so the primaries are
+    enumerated (``2**len(primaries)``) and the auxiliaries left to ``satisfiable``.
+    """
+    return {
+        bits
+        for bits in itertools.product((False, True), repeat=len(primaries))
+        if satisfiable(clauses, dict(zip(primaries, bits)), nv)
+    }
 
 
-@pytest.mark.parametrize("n,k", [(4, 2), (5, 2), (5, 3), (6, 3)])
+@pytest.mark.parametrize("n,k", [(4, 2), (5, 2), (5, 3), (6, 3), (8, 4)])
 def test_clean_room_atmost_accepts_exactly_the_light_assignments(n, k):
     lits = list(range(1, n + 1))
     clauses, top = atmost_seq(lits, k, n)
@@ -52,12 +99,29 @@ def test_clean_room_atmost_accepts_exactly_the_light_assignments(n, k):
     assert models(clauses, top, lits) == expected
 
 
-@pytest.mark.parametrize("n,k", [(4, 2), (5, 2), (5, 3), (6, 3)])
+@pytest.mark.parametrize("n,k", [(4, 2), (5, 2), (5, 3), (6, 3), (8, 4)])
 def test_clean_room_equals_accepts_exactly_the_weight_k_assignments(n, k):
     lits = list(range(1, n + 1))
     clauses, top = equals_seq(lits, k, n)
     expected = {a for a in itertools.product((False, True), repeat=n) if sum(a) == k}
     assert models(clauses, top, lits) == expected
+
+
+def test_the_search_these_tests_rely_on_agrees_with_exhaustive_enumeration():
+    # models() trades a 2**nv sweep for propagation plus branching.  On a case
+    # small enough for both, they must return the same projection -- otherwise
+    # every semantic test above is quietly checking the wrong thing.
+    lits = [1, 2, 3, 4]
+    clauses, top = equals_seq(lits, 2, 4)
+
+    brute = set()
+    for bits in itertools.product((False, True), repeat=top):
+        value = (False,) + bits  # 1-based
+        if all(any(value[abs(l)] == (l > 0) for l in clause) for clause in clauses):
+            brute.add(bits[: len(lits)])
+
+    assert models(clauses, top, lits) == brute
+    assert brute == {a for a in itertools.product((False, True), repeat=4) if sum(a) == 2}
 
 
 # --- and agrees with PySAT clause for clause ------------------------------

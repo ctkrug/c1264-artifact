@@ -1,7 +1,9 @@
 # Reproduction driver for C(12,6,4) = 41.
 #
-# Targets are ordered by cost.  `make check` is seconds, `make regenerate` is
-# minutes, `make certify` is CPU-days and needs ~200 GB of scratch disk.  See
+# Targets are ordered by cost.  `make check` is a couple of minutes,
+# `make regenerate` about ten, `make certify` is CPU-days and needs ~200 GB of
+# scratch disk.  The wall-clock figures below were measured on an Apple M-series
+# laptop under CPython 3.14.6; they are for calibration, not a contract.  See
 # README.md for what each tier establishes and docs/TOOLCHAIN.md for the external
 # solvers `certify` needs.
 
@@ -16,11 +18,11 @@ export PYTHONPATH := $(CURDIR)/src
         upper-bound clean help
 
 help:
-	@echo "make check       structural tests + upper bound + encoder sanity   (~1 min)"
-	@echo "make regenerate  rebuild all 81 CNF instances and check hashes     (~2 min)"
+	@echo "make check       structural tests + upper bound + encoder sanity   (~2 min)"
+	@echo "make regenerate  rebuild all 81 CNF instances and check hashes    (~10 min)"
 	@echo "make cross-check rebuild all 81 without PySAT, clean-room encoder  (~3 min)"
 	@echo "make certify     solve and machine-check every instance      (CPU-days)"
-	@echo "make all         check + regenerate + cross-check"
+	@echo "make all         check + regenerate + cross-check                 (~15 min)"
 	@echo "make manifest    regenerate MANIFEST.sha256 over the deposit"
 
 all: check regenerate cross-check

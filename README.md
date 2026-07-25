@@ -21,17 +21,24 @@ pip install -r requirements.txt
 ./reproduce.sh
 ```
 
-That takes about five minutes, needs no SAT solver, and checks everything except
-the refutations themselves. It ends by printing exactly which claims it did and
-did not establish. `make help` lists the tiers separately, and
-`SKIP_CROSS_CHECK=1 ./reproduce.sh` drops the slowest step.
+That takes about fifteen minutes, needs no SAT solver, and checks everything
+except the refutations themselves. It prints each step's elapsed time as it goes
+and ends by saying exactly which claims it did and did not establish. `make help`
+lists the tiers separately, and `SKIP_CROSS_CHECK=1 ./reproduce.sh` drops the
+three-minute clean-room re-encoding.
+
+Two steps dominate: rebuilding all 47 frontier nodes under *both* cardinality
+encodings for the provenance check (~6 min) and the clean-room cross-check
+(~3 min). Everything else together is under four minutes. All wall-clock figures
+here and in `make help` were measured on an Apple M-series laptop under CPython
+3.14.6, single-threaded throughout; they are for calibration, not a contract.
 
 ## What the three tiers establish
 
 | Tier | Command | Cost | Establishes |
 |---|---|---|---|
-| 1 | `make check` | ~1 min | `C(12,6,4) <= 41` completely; the group, the variable layout, the orbit partitions, and `CardEnc.equals` against ground truth |
-| 2 | `make regenerate` | ~2 min | all 81 CNF instances regenerate **byte for byte** from this source, so the deposited certificates apply to exactly these files; the case analysis is exhaustive; the blockers are orbit-closed and licensed |
+| 1 | `make check` | ~2 min | `C(12,6,4) <= 41` completely; the group, the variable layout, the orbit partitions, and `CardEnc.equals` against ground truth |
+| 2 | `make regenerate` | ~10 min | all 81 CNF instances regenerate **byte for byte** from this source, so the deposited certificates apply to exactly these files; the case analysis is exhaustive; the blockers are orbit-closed and licensed |
 | 2b | `make cross-check` | ~3 min | the same 81 instances rebuilt a second time by a clean-room encoder that imports no PySAT, and byte-identical — removing the one unverified third-party library from the trust root |
 | 3 | `make certify` | CPU-days, ~200 GB scratch | the 81 refutations themselves, from scratch |
 
