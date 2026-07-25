@@ -49,7 +49,7 @@ supersedes them with a version that runs from this repository alone.
 | `independent_aux_audit.py` | `independent-aux-audit.json` | 14 auxiliary CNFs, `ok: 14`, `bad: []` — superseded |
 | `independent_extension_audit.py` | `independent-extension-audit.json` | 20 extension CNFs, `ok: 20`, `bad: []` — superseded |
 | `independent_structure.py` | `independent-structure.json` | group order 3840 re-derived; root orbit sizes `[10, 32, 60, 80, 120, 160]` summing to 462; 3 orbits lie entirely through point 1 and 0 straddle it; secondary and tertiary counts re-derived by orbit–stabiliser |
-| `independent_witness_blocker.py` | `independent-witness-blocker.json` | the 41-block design's link is a 20-block cover with degree vector `10, 9^10`; `blocker-20.cnf` is 15,120 distinct all-negative width-20 clauses forming exactly 20 orbits |
+| `independent_witness_blocker.py` | `independent-witness-blocker.json` | the root-tail SAT witness is a 20-block link cover with degree vector `10, 9^10`; `blocker-20.cnf` is 15,120 distinct all-negative width-20 clauses forming exactly 20 orbits |
 | `uniqueness_orbit.py` | `uniqueness-orbit.json` | orbit size 166,320 = 11!/240, of which 15,120 have a degree-10 point 1; `normalised_equals_blocked: true`, so the blocker blocks exactly that set |
 
 Five further verdict files have no script here — they were produced by ad-hoc

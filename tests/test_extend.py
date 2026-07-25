@@ -95,6 +95,22 @@ def test_residual_geometry_constants():
 
 
 @pytest.mark.parametrize("digest", HASH_SAMPLE[:1])
+def test_extension_uses_all_fifty_five_residual_pair_degrees(digest):
+    record = MANIFEST[digest]
+    link = extend.load_link(frontier.REPO_ROOT / record["witness_file"])
+    _, receipt = extend.build_extension(link)
+    segments = receipt["segments"]
+    assert len(segments) == 55
+    assert {
+        tuple(map(int, segment["pair"].split("-"))) for segment in segments
+    } == set(itertools.combinations(range(1, extend.POINTS), 2))
+    for segment in segments:
+        pair = tuple(map(int, segment["pair"].split("-")))
+        target = 10 if pair in extend.MATCHING else 9
+        assert segment["link_multiplicity"] + segment["residual_bound"] == target
+
+
+@pytest.mark.parametrize("digest", HASH_SAMPLE[:1])
 def test_no_coverage_clause_mentions_the_distinguished_point(digest):
     # Every quadruple containing point 0 is already covered by the link, so the
     # residual instance must be silent about point 0 entirely.

@@ -135,6 +135,7 @@ This is the step a sceptical referee should read first, because it is where a
 | Each extension instance regenerates byte-identically | `bin/gen_extensions.py` | `cnf_sha256` |
 | Each extension instance has **no unit clauses** | `extend.build_extension` assertion; `tests/test_extend.py::test_extension_instance_has_no_unit_clauses` | — |
 | Every residual coverage clause has width `C(7,2) = 21` and never mentions the distinguished point | `extend.build_extension`; `tests/test_extend.py` | — |
+| The degree-10 pairs form a perfect matching; after normalisation, each extension instance has 55 residual pair-degree equations, with target 10 on matching edges and 9 elsewhere | `extend.MATCHING`, `extend.build_extension`; `tests/test_extend.py` | — |
 | The deposited witness really lies in the orbit it claims | `bin/audit_blocker.py` recomputes each witness's canonical digest rather than trusting the manifest | `data/links/link-*.txt` |
 
 **The eight non-canonical witnesses.** Twelve of the 20 deposited witnesses are

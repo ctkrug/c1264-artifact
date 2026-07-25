@@ -14,7 +14,7 @@ search.  For the blocker given (default: all three shipped ones) it
      orbit;
   4. for each orbit, checks that ``data/extensions.json`` records a witness *in
      that orbit* whose extension instance is machine-checked UNSAT.  That is the
-     licence to block it: a link with no extension to a 41-block cover cannot
+     licence to block it: a link with no extension to a 40-block cover cannot
      occur in one.
   5. checks that a smaller blocker's orbits are a subset of the largest one's,
      which is what makes the staged blockers (9, 13, 20 orbits) a chain rather

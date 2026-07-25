@@ -38,16 +38,17 @@ here and in `make help` were measured on an Apple M-series laptop under CPython
 | Tier | Command | Cost | Establishes |
 |---|---|---|---|
 | 1 | `make check` | ~2 min | `C(12,6,4) <= 41` completely; the group, the variable layout, the orbit partitions, and `CardEnc.equals` against ground truth |
-| 2 | `make regenerate` | ~10 min | all 81 CNF instances regenerate **byte for byte** from this source, so the deposited certificates apply to exactly these files; the case analysis is exhaustive; the blockers are orbit-closed and licensed |
-| 2b | `make cross-check` | ~3 min | the same 81 instances rebuilt a second time by an independent encoder that imports no PySAT; byte-identical |
+| 2 | `make regenerate` | ~10 min | all 81 baseline CNF instances regenerate **byte for byte** from this source; the case analysis is exhaustive; the blockers are orbit-closed and licensed |
+| 2b | `make cross-check` | ~3 min | the same 81 sequential baseline instances rebuilt by a clean-room encoder that imports no PySAT; byte-identical |
 | 3 | `make certify` | CPU-days, ~200 GB scratch | the 81 refutations themselves, from scratch |
 
-Tier 2 is the one that matters for a referee. A hash match there means the
-lower-bound argument's dependence on the original hardware is reduced to
-"re-check these 81 certificates", which tier 3 does and anyone can redo
-independently. Tier 2 is also where a hidden gap would surface: it checks not just
-that the instances rebuild, but that the 47 case-tree nodes plus the 14 auxiliary
-instances genuinely cover every branch.
+Tier 2 is the one that matters for a referee. A hash match there binds the source
+to the published formulas. For 80 primary certificates the checked formula is
+that sequential baseline. The largest case, `s-r0-2`, instead carries a
+`cake_lpr` certificate for its kmtotalizer translation; the manifest binds both
+translations to the same non-cardinality core, and the sequential translation
+was separately solved and accepted by `drat-trim`. Tier 2 also checks that the 47
+case-tree nodes plus the 14 auxiliary instances genuinely cover every branch.
 
 ## The argument in one page
 
@@ -56,7 +57,7 @@ they are relabellings of each other). `bin/verify_cover.py` verifies coverage by
 bitmask sweep, `bin/verify_cover.c` by a nested-loop membership scan with no
 shared code. Both must print `VALID`.
 
-**Lower bound.** Suppose a 41-block cover exists. Fix a point; its *link* is a
+**Lower bound.** Suppose a 40-block cover exists. Fix a point; its *link* is a
 covering of all triples of the remaining 11 points by 5-subsets — a `C(11,5,3)`
 instance with 462 candidate blocks. Exact per-point degrees (10 for one point,
 9 for the rest) force the link to have exactly 20 blocks, with no cardinality
@@ -75,12 +76,16 @@ Three things then have to be shown, and each is a layer of this artifact:
    case; `tests/test_auxiliary.py` checks the partition, it is not asserted.
 3. **Layer B — the blockers.** The case tree is allowed to assume 20 specific link
    orbits do not occur. That is not free: for each of the 20, a *residual*
-   instance asks whether that link extends to a 41-block cover, and each is
-   refuted (`bin/gen_extensions.py`). Those instances contain **zero unit
-   clauses** — the link is subtracted from the degree bounds rather than asserted
-   — which is what makes them independent of Layer A's canonicalisation and hence
-   able to justify it. `bin/audit_blocker.py` checks that each blocker is a union
-   of complete orbits and that every orbit has such a refutation.
+   instance asks whether that link extends to a 40-block cover, and each is
+   refuted (`bin/gen_extensions.py`). In any hypothetical 40-block cover every
+   point has one degree-10 partner and ten degree-9 partners, so the six
+   degree-10 pairs form a perfect matching. After normalising that matching, each
+   extension instance imposes 55 exact residual pair-degree equations: total
+   degree 10 on the five matching edges among the 11 link points and 9 on every
+   other pair, minus the multiplicity already contributed by the fixed link.
+   The instances contain **zero unit clauses** because the link is substituted
+   into those residual bounds. `bin/audit_blocker.py` checks that each blocker is
+   a union of complete orbits and that every orbit has such a refutation.
 
 ## Layout
 

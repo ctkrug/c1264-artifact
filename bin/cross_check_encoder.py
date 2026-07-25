@@ -161,7 +161,7 @@ def load_link(path: Path) -> List[Tuple[int, ...]]:
 
 
 def clean_room_extension(link_path: Path) -> Tuple[int, List[Clause], int]:
-    """E(L): can this link extend to a 41-block cover?  UNSAT says no.
+    """E(L): can this link extend to a 40-block cover?  UNSAT says no.
 
     Variables 1..462 are the 6-subsets of {2..12} -- the blocks avoiding the
     distinguished point 1, since the blocks through it are exactly the lifted

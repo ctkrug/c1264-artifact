@@ -3,15 +3,15 @@
 Layer A (:mod:`c1264.encode`) works inside the link of a point and refutes
 candidate links.  Layer B asks the complementary question about a link that
 *does* exist: given a valid 20-block C(11,5,3) link L, can L be completed to a
-41-block cover of all 4-subsets of a 12-set?  If that is refuted, L can never
-occur in a 41-block design, and L's whole orbit may be added to the blocker used
+40-block cover of all 4-subsets of a 12-set?  If that is refuted, L can never
+occur in a 40-block design, and L's whole orbit may be added to the blocker used
 by Layer A.  Each of the twenty blocker orbits has exactly one such refutation.
 
 Geometry
 --------
 Label the twelve points ``0..11`` and distinguish point ``0``.  A block of the
 design is a 6-subset.  The blocks through point 0 correspond to the 5-subsets of
-``{1..11}``: those twenty blocks are the link L.  The remaining twenty-one blocks
+``{1..11}``: those twenty blocks are the link L.  The remaining twenty blocks
 avoid point 0, so they range over the C(11,6) = 462 six-subsets of ``{1..11}``.
 Those 462 are the variables of the residual instance -- the same count as Layer A
 but a different object, which is worth stating because the coincidence is easy to
@@ -24,8 +24,11 @@ The instance is *residual*: L is not encoded as units, it is substituted away.
   0 are all covered by L (a valid link covers every triple of ``{1..11}``), so no
   clause mentions point 0 and every clause has width 21 -- the number of 6-subsets
   of ``{1..11}`` containing a given 4-subset is C(7,2) = 21.
-* Degrees.  Every pair of points must lie in a fixed number of blocks; the pair's
-  residual bound is that number minus its multiplicity in L.  Consequently the
+* Degrees.  In a hypothetical 40-block cover every point has one degree-10
+  partner and ten degree-9 partners, so the degree-10 pairs form a perfect
+  matching.  After normalising that matching, every pair of link points must lie
+  in a fixed number of blocks; the pair's residual bound is that number minus
+  its multiplicity in L.  Consequently the
   instance has **zero unit clauses**: nothing about L is asserted, everything
   about L is subtracted.  That is what makes these instances independent of the
   Layer-A canonicalisation, and hence usable as its justification.
@@ -96,9 +99,9 @@ def link_from_blocks(source: Sequence[Sequence[int]]) -> List[Block]:
 
 
 def build_extension(link: Sequence[Block]) -> Tuple[CNF, Dict[str, object]]:
-    """Encode "the given link extends to a 41-block C(12,6,4) cover".
+    """Encode "the given link extends to a 40-block C(12,6,4) cover".
 
-    UNSAT means the link cannot occur in any 41-block design, which is exactly
+    UNSAT means the link cannot occur in any 40-block design, which is exactly
     the licence to block its orbit.  Returns the formula and a receipt recording
     the shape of the instance so a reviewer can check it without re-deriving it.
     """

@@ -23,7 +23,7 @@ They are, because of the following two properties, both checked here:
 
 The soundness of *forbidding* a link is a separate matter, discharged by the
 extension instances of :mod:`c1264.extend`: link L is forbidden only because the
-residual problem "extend L to a 41-block cover of the 4-subsets of a 12-set" was
+residual problem "extend L to a 40-block cover of the 4-subsets of a 12-set" was
 refuted.  This module establishes *which* links are forbidden; that module
 establishes that each one deserved to be.
 """

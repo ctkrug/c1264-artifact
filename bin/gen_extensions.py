@@ -2,7 +2,7 @@
 """Regenerate the 20 extension instances that license the orbit blocker.
 
 Each of the twenty blocked link orbits is blocked because one link in it was
-shown not to extend to a 41-block cover.  This script rebuilds those twenty
+shown not to extend to a 40-block cover.  This script rebuilds those twenty
 residual instances from the deposited witnesses in ``data/links/`` and checks
 their SHA-256 against ``data/extensions.json``.
 
