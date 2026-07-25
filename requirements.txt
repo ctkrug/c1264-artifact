@@ -1,0 +1,14 @@
+# Pinned exactly.  The published CNF SHA-256 hashes depend on the byte output of
+# PySAT's CardEnc and CNF.to_file, so a different PySAT version will regenerate
+# semantically equivalent instances with DIFFERENT hashes, and the stored proof
+# certificates will no longer apply to them.
+#
+# Note that python-sat is pinned to a DEVELOPMENT release.  This is deliberate
+# and is the version the campaign ran; see docs/REPRODUCIBILITY.md for how to
+# obtain it and what to do if it becomes unavailable.
+python-sat==1.9.dev7
+pypblib==0.0.4
+six==1.17.0
+
+# Test runner only; not part of the proof.
+pytest>=8.0

@@ -1,0 +1,77 @@
+{
+ "my_orbit_counts": {
+  "r0_secondary": 39,
+  "r1_secondary": 68,
+  "r2_secondary": 19,
+  "r0s0_tertiary": 122
+ },
+ "campaign_orbit_counts": {
+  "r0_secondary": 39,
+  "r1_secondary": 68,
+  "r2_secondary": 19,
+  "r0s0_tertiary": 122
+ },
+ "orbit_counts_match": true,
+ "branch_space_derived": 247,
+ "branch_space_claimed": 247,
+ "branch_space_matches": true,
+ "frontier_nodes_total": 47,
+ "frontier_t_nodes": 33,
+ "frontier_r0_nodes": 6,
+ "frontier_r1_nodes": 8,
+ "frontier_r2_nodes": 0,
+ "frontier_nodes_are_distinct_branches": true,
+ "r0_node_indices_exclude_s0": true,
+ "r1_individually_closed": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15
+ ],
+ "r1_individually_closed_count": 16,
+ "r1_gaps_disjoint_from_frontier": true,
+ "region_r0s0_tertiary": {
+  "frontier": 33,
+  "tail": 89,
+  "sum": 122,
+  "need": 122,
+  "ok": true
+ },
+ "region_r0_secondary": {
+  "frontier": 6,
+  "tail": 32,
+  "sum": 38,
+  "need": 38,
+  "ok": true
+ },
+ "region_r1_secondary": {
+  "frontier": 8,
+  "gaps": 8,
+  "tail": 52,
+  "sum": 68,
+  "need": 68,
+  "ok": true
+ },
+ "region_r2": {
+  "job": "r2plus-b20",
+  "covers": 19,
+  "need": 19,
+  "ok": true
+ },
+ "attribution_total": 247,
+ "r_ge_3_excluded_by": "orbits{0,1,2} are exactly the 210 blocks through point 1 (verified independently: 3 orbits, 0 mixed, 210 blocks) and deg(1)=10>0, so the minimal root orbit hit is in {0,1,2}; additionally certified by r345-tail (UNSAT, re-replayed s VERIFIED)",
+ "all_regions_ok": true,
+ "VERDICT_branch_space_complete": true
+}

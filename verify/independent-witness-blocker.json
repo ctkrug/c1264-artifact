@@ -1,0 +1,71 @@
+{
+ "E_witness": {
+  "blocks": 20,
+  "distinct_blocks": 20,
+  "is_20_block_cover": true,
+  "triples": 165,
+  "uncovered_triples": 0,
+  "degrees": [
+   10,
+   9,
+   9,
+   9,
+   9,
+   9,
+   9,
+   9,
+   9,
+   9,
+   9
+  ],
+  "degrees_are_forced_vector": true,
+  "campaign_root_orbits_hit": [
+   2
+  ],
+  "first_hit_r": 2,
+  "hits_r0_or_r1": false,
+  "orbit_sizes_hit": [
+   10,
+   32
+  ],
+  "model_sha256": "434e207064a62c8cc595a129269329fb307e0000b0daaef852ae839cc1b3e385",
+  "falsifies_inherited_frontier": true
+ },
+ "F_blocker20": {
+  "clauses": 15120,
+  "distinct_clauses": 15120,
+  "clause_widths": [
+   20
+  ],
+  "all_negative": true,
+  "vars_in_block_range": true,
+  "distinct_blocked_links": 15120,
+  "orbit_count": 20,
+  "orbit_sizes": [
+   16,
+   160,
+   160,
+   240,
+   240,
+   320,
+   320,
+   320,
+   384,
+   480,
+   480,
+   480,
+   960,
+   960,
+   960,
+   960,
+   1920,
+   1920,
+   1920,
+   1920
+  ],
+  "orbit_sizes_sum": 15120,
+  "closed_under_all_three_generators": true,
+  "is_union_of_complete_G_orbits": true,
+  "sha256": "0851aab576d297c8a11647f800e1894d80d8fc8935dbd84d671e8a7a4f1a3c12"
+ }
+}

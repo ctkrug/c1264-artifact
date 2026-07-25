@@ -1,0 +1,69 @@
+{
+ "r1": {
+  "rep": [
+   1,
+   2,
+   3,
+   4,
+   6
+  ],
+  "stab_order": 32,
+  "orbits_of_R0_under_stab": 8,
+  "TRUE_secondary_orbits_on_legal_pool": 60,
+  "secondary_orbits_negated_by_tail": 12,
+  "secondary_orbits_STRADDLED": 0,
+  "secondary_orbits_left_to_tail_UNSAT": 48,
+  "check_69_eq_1_plus_k_plus_pool": true,
+  "individually_closed_required": 12,
+  "campaign_claim_8_frontier_plus_8_gaps": 16,
+  "MATCH_individually_closed": false,
+  "tail_kills": 48
+ },
+ "r0": {
+  "rep": [
+   1,
+   2,
+   4,
+   6,
+   8
+  ],
+  "stab_order": 48,
+  "TRUE_secondary_orbits_on_legal_pool": 39,
+  "secondary_orbits_negated_by_tail": 7,
+  "secondary_orbits_STRADDLED": 0,
+  "secondary_orbits_left_to_tail_UNSAT": 32,
+  "individually_closed_required": 7,
+  "campaign_claim_6_frontier": 6,
+  "MATCH_individually_closed": false,
+  "tail_kills": 32,
+  "campaign_claim_tail_kills": 32,
+  "MATCH_tail": true
+ },
+ "r0s0": {
+  "root_rep": [
+   1,
+   2,
+   4,
+   6,
+   8
+  ],
+  "sec_rep": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "joint_stab_order": 8,
+  "TRUE_tertiary_orbits_on_legal_pool": 122,
+  "tertiary_orbits_negated_by_tail": 33,
+  "tertiary_orbits_STRADDLED": 0,
+  "tertiary_orbits_left_to_tail_UNSAT": 89,
+  "individually_closed_required": 33,
+  "campaign_claim_33_frontier": 33,
+  "MATCH_individually_closed": true,
+  "tail_kills": 89,
+  "campaign_claim_tail_kills": 89,
+  "MATCH_tail": true
+ }
+}

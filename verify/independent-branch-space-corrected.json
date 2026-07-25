@@ -1,0 +1,22 @@
+{
+ "finding": "branch tree is COMPLETE; campaign over-counted the r1 region",
+ "campaign_claimed_branches": 247,
+ "campaign_partition": "122 tertiary + 38 r0-sec + 68 r1-sec + 19 r2-sec",
+ "independently_derived": {
+  "r0s0_tertiary": 122,
+  "r0_secondary_excl_s0": 38,
+  "r1_secondary_on_LEGAL_pool": 60,
+  "r2_and_above": "closed by ONE symmetry-free job (r2plus-b20), no orbit accounting needed"
+ },
+ "r1_overcount": {
+  "claimed": 68,
+  "true": 60,
+  "cause": "secondary orbits were enumerated on a pool including root-orbit-0 blocks, which the r=1 canonical constraint (no orbit-0 block present) forbids",
+  "consequence": "16 individual r1 jobs collapse onto 12 distinct legal orbits; 4 duplicates",
+  "soundness": "harmless over-coverage - a superset of the needed branches was solved"
+ },
+ "completeness_check": "for every region, {orbits negated by the tail} is a subset of {orbits individually closed by a solved UNSAT job}; missing = 0 everywhere",
+ "tail_soundness": "no tail negates a partial orbit (straddle count 0 on all three tails)",
+ "VERDICT_frontier_completeness_REDERIVED": true,
+ "VERDICT_no_branch_left_open": true
+}

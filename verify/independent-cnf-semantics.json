@@ -1,0 +1,131 @@
+{
+ "r2plus-b20": {
+  "coverage_clauses_equal_my_165": true,
+  "n_coverage": 165,
+  "blocker_clauses_equal_blocker20": true,
+  "n_blocker": 15120,
+  "neg_units_equal_orbits_0_and_1": true,
+  "n_neg_units": 200,
+  "expected_neg_units": 200,
+  "no_positive_units": true,
+  "no_canonical_representative_asserted": true,
+  "cardinality_clauses": 80360,
+  "meaning": "base(deg 10,9^10) AND blocker-20 AND (no block from root orbits 0 or 1) is UNSAT",
+  "consequence": "every forced-degree 20-block link avoiding the 20 blocked link-orbits must contain a block from root orbit 0 or 1 -- i.e. the r>=2 region is empty. No symmetry/canonicity assumption is used by this job."
+ },
+ "r345-tail": {
+  "coverage_clauses_equal_my_165": true,
+  "no_blocker_clauses": true,
+  "neg_units_equal_orbits_0_1_2": true,
+  "orbits_0_1_2_are_exactly_blocks_through_point_1": true,
+  "n_neg_units": 210,
+  "no_positive_units": true,
+  "meaning": "base AND (no block through point 1) is UNSAT, with NO blocker and NO canonicity"
+ },
+ "r0-sec-tail": {
+  "n_coverage": 165,
+  "coverage_equal_my_165": true,
+  "n_blocker": 0,
+  "blocker_is_subset_of_blocker20": true,
+  "n_pos_units": 1,
+  "n_neg_units": 106,
+  "pos_unit_blocks": [
+   [
+    1,
+    2,
+    4,
+    6,
+    8
+   ]
+  ]
+ },
+ "r1-sec-tail": {
+  "n_coverage": 165,
+  "coverage_equal_my_165": true,
+  "n_blocker": 0,
+  "blocker_is_subset_of_blocker20": true,
+  "n_pos_units": 1,
+  "n_neg_units": 147,
+  "pos_unit_blocks": [
+   [
+    1,
+    2,
+    3,
+    4,
+    6
+   ]
+  ]
+ },
+ "r0s0-ter-tail": {
+  "n_coverage": 165,
+  "coverage_equal_my_165": true,
+  "n_blocker": 0,
+  "blocker_is_subset_of_blocker20": true,
+  "n_pos_units": 2,
+  "n_neg_units": 134,
+  "pos_unit_blocks": [
+   [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   [
+    1,
+    2,
+    4,
+    6,
+    8
+   ]
+  ]
+ },
+ "r1-gap-s6": {
+  "n_coverage": 165,
+  "coverage_equal_my_165": true,
+  "n_blocker": 0,
+  "blocker_is_subset_of_blocker20": true,
+  "n_pos_units": 2,
+  "n_neg_units": 103,
+  "pos_unit_blocks": [
+   [
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   [
+    1,
+    2,
+    3,
+    8,
+    10
+   ]
+  ]
+ },
+ "r1-gap-s12": {
+  "n_coverage": 165,
+  "coverage_equal_my_165": true,
+  "n_blocker": 0,
+  "blocker_is_subset_of_blocker20": true,
+  "n_pos_units": 2,
+  "n_neg_units": 131,
+  "pos_unit_blocks": [
+   [
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   [
+    1,
+    2,
+    4,
+    8,
+    9
+   ]
+  ]
+ }
+}

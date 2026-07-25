@@ -1,0 +1,72 @@
+cff-version: 1.2.0
+title: "C(12,6,4) = 41 — computational artifact"
+message: >-
+  If you use this artifact, please cite both the accompanying paper and this
+  software record.
+type: software
+authors:
+  - family-names: Krug
+    given-names: Charlie
+    email: charlie@charliekrug.com
+    orcid: "https://orcid.org/0009-0001-6144-9421"
+abstract: >-
+  Complete computational record of the determination of the covering number
+  C(12,6,4) = 41. The upper bound is an explicit 41-block design checked by two
+  independent programs; the lower bound is a symmetry-reduced case analysis over
+  the link of a point, comprising 81 SAT instances (47 case-tree frontier nodes,
+  14 exhaustiveness instances, 20 link-extension refutations), every one of which
+  is refuted by a proof object replayed with drat-trim and machine-checked by
+  cake_lpr, a checker extracted from a HOL4 correctness proof. All instances
+  regenerate byte-for-byte from the deposited source, and every proof object is
+  identified by SHA-256 in the manifests.
+keywords:
+  - covering design
+  - covering number
+  - combinatorial optimisation
+  - SAT solving
+  - proof certificate
+  - LRAT
+  - cake_lpr
+  - computer-assisted proof
+license: MIT
+version: 1.0.0
+date-released: "2026-07-25"
+references:
+  - type: software
+    title: cake_lpr
+    abstract: >-
+      Verified LRAT proof checker, extracted by CakeML from a correctness proof
+      in HOL4. The verified link in this artifact's proof chain.
+    authors:
+      - family-names: Tan
+        given-names: Yong Kiam
+      - family-names: Heule
+        given-names: Marijn J. H.
+      - family-names: Myreen
+        given-names: Magnus O.
+  - type: software
+    title: drat-trim
+    abstract: DRAT proof checker and DRAT-to-LRAT converter.
+    authors:
+      - family-names: Heule
+        given-names: Marijn J. H.
+  - type: software
+    title: CaDiCaL
+    version: 3.0.1
+    abstract: CDCL SAT solver; produced the DRAT proofs.
+    authors:
+      - family-names: Biere
+        given-names: Armin
+  - type: software
+    title: PySAT
+    version: 1.9.dev7
+    abstract: >-
+      Provided the cardinality-constraint encodings (seqcounter and kmtotalizer).
+      The published CNF hashes depend on this exact version.
+    authors:
+      - family-names: Ignatiev
+        given-names: Alexey
+      - family-names: Morgado
+        given-names: Antonio
+      - family-names: Marques-Silva
+        given-names: Joao

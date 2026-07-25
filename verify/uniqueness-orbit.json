@@ -1,0 +1,11 @@
+{
+ "witness_sha256": "434e207064a62c8cc595a129269329fb307e0000b0daaef852ae839cc1b3e385",
+ "orbit_size": 166320,
+ "orbit_size_expected": 166320,
+ "orbit_size_is_11fact_over_240": true,
+ "blocked_count": 15120,
+ "blocked_subset_of_orbit": true,
+ "orbit_members_with_deg10_point_1": 15120,
+ "normalised_equals_blocked": true,
+ "aut_order_by_orbit_stabiliser": 240
+}

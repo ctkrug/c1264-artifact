@@ -1,0 +1,122 @@
+{
+ "A_group": {
+  "order": 3840,
+  "order_is_3840": true,
+  "all_distinct": true,
+  "all_bijections": true,
+  "all_fix_point_1": true,
+  "contains_identity": true,
+  "closed_under_composition": true,
+  "closed_under_inverse": true
+ },
+ "B_root": {
+  "n_root_orbits": 6,
+  "sizes_sorted": [
+   10,
+   32,
+   60,
+   80,
+   120,
+   160
+  ],
+  "sizes_sum": 462,
+  "partitions_462": true,
+  "orbits_entirely_through_point_1": 3,
+  "orbits_mixed_on_point_1": 0,
+  "blocks_through_point_1": 210,
+  "equals_C_10_4": true,
+  "orbit_stabilizer_holds": true
+ },
+ "C_secondary": {
+  "10": {
+   "rep": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "stab_order": 384,
+   "n_secondary_orbits": 19,
+   "orbit_stabilizer_identity": true
+  },
+  "120": {
+   "rep": [
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   "stab_order": 32,
+   "n_secondary_orbits": 68,
+   "orbit_stabilizer_identity": true
+  },
+  "80": {
+   "rep": [
+    1,
+    2,
+    4,
+    6,
+    8
+   ],
+   "stab_order": 48,
+   "n_secondary_orbits": 39,
+   "orbit_stabilizer_identity": true
+  },
+  "60": {
+   "rep": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "stab_order": 64,
+   "n_secondary_orbits": 52,
+   "orbit_stabilizer_identity": true
+  },
+  "160": {
+   "rep": [
+    2,
+    3,
+    4,
+    6,
+    8
+   ],
+   "stab_order": 24,
+   "n_secondary_orbits": 70,
+   "orbit_stabilizer_identity": true
+  },
+  "32": {
+   "rep": [
+    2,
+    4,
+    6,
+    8,
+    10
+   ],
+   "stab_order": 120,
+   "n_secondary_orbits": 20,
+   "orbit_stabilizer_identity": true
+  }
+ },
+ "D_tertiary": {
+  "root_rep": [
+   1,
+   2,
+   4,
+   6,
+   8
+  ],
+  "secondary_rep": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "joint_stab_order": 8,
+  "n_tertiary_orbits": 122
+ }
+}
