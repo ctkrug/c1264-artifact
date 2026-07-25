@@ -156,3 +156,29 @@ def test_the_generated_check_records_carry_no_machine_dependent_field():
         offenders = sorted(k for k in keys(json.loads(path.read_text()))
                            if any(bad in k.lower() for bad in volatile))
         assert offenders == [], f"build/{name} would differ between runs: {offenders}"
+
+
+def test_the_manifest_is_not_stale():
+    # The failure this catches: someone edits a deposited file, forgets
+    # `make manifest`, and the very first step of the README quick start --
+    # `shasum -c MANIFEST.sha256` -- reports a mismatch on a fresh clone.  Lines
+    # naming files under build/ belong to the archival bundle's longer manifest
+    # and are skipped when the tree has not been built.
+    import hashlib
+
+    manifest = frontier.REPO_ROOT / "MANIFEST.sha256"
+    assert manifest.is_file()
+
+    stale, missing = [], []
+    for line in manifest.read_text().splitlines():
+        digest, _, relative = line.partition("  ")
+        path = frontier.REPO_ROOT / relative
+        if not path.is_file():
+            if not relative.startswith("build/"):
+                missing.append(relative)
+            continue
+        if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            stale.append(relative)
+
+    assert missing == [], f"manifest names files that are not here: {missing}"
+    assert stale == [], f"run `make manifest`; these no longer match: {stale}"
