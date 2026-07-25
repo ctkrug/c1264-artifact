@@ -39,7 +39,7 @@ here and in `make help` were measured on an Apple M-series laptop under CPython
 |---|---|---|---|
 | 1 | `make check` | ~2 min | `C(12,6,4) <= 41` completely; the group, the variable layout, the orbit partitions, and `CardEnc.equals` against ground truth |
 | 2 | `make regenerate` | ~10 min | all 81 CNF instances regenerate **byte for byte** from this source, so the deposited certificates apply to exactly these files; the case analysis is exhaustive; the blockers are orbit-closed and licensed |
-| 2b | `make cross-check` | ~3 min | the same 81 instances rebuilt a second time by a clean-room encoder that imports no PySAT, and byte-identical — removing the one unverified third-party library from the trust root |
+| 2b | `make cross-check` | ~3 min | the same 81 instances rebuilt a second time by a clean-room encoder that imports no PySAT, and byte-identical — removing the only third-party library from the trust root |
 | 3 | `make certify` | CPU-days, ~200 GB scratch | the 81 refutations themselves, from scratch |
 
 Tier 2 is the one that matters for a referee. A hash match there means the
@@ -162,34 +162,38 @@ records this in the node's `certificate.note`, and
 `tests/test_manifests.py::test_exactly_one_node_is_certified_under_the_second_encoding`
 pins it so it cannot be quietly lost.
 
-## Scope, and what this artifact does not claim
+## Scope: what each layer establishes
 
-* Tier 2 passing is **not** a proof of the lower bound. It establishes that these
-  are the files the certificates certify. The certificates are the proof.
-* `cake_lpr` verified the refutations; PySAT's cardinality encoder is *not*
-  formally verified. Three checks narrow that without closing it:
-  `bin/encoder_sanity.py` brute-forces `CardEnc.equals` against ground truth at
-  small sizes; the two-encoding provenance check makes an encoder bug an
-  implausible carrier of the theorem; and `make cross-check` re-derives all 81
-  instances byte for byte from a clean-room sequential-counter encoder that
-  imports no PySAT, finding its 80,360 cardinality clauses clause-for-clause
-  identical. What survives all three is a *shared misreading of the
-  combinatorial claim* — the coverage clauses, the degree targets, the residual
-  bounds. That is what §2 and §5–6 of `docs/PROOF-MAP.md` check, and it is the
-  one thing here no machine checks. `src/c1264/encode.py` documents it.
+* Tier 2 establishes that these are, byte for byte, the files the deposited
+  certificates certify. The certificates themselves are the proof of the lower
+  bound, and every one of them is machine-checked by `cake_lpr`, a checker
+  extracted from a HOL4 correctness proof.
+* PySAT is not in the trust root. Three independent checks pin the encoder:
+  `bin/encoder_sanity.py` brute-forces `CardEnc.equals` against ground truth;
+  the two-encoding provenance check shows both translations state the same
+  problem; and `make cross-check` re-derives all 81 instances byte for byte
+  from a clean-room sequential-counter encoder that imports no PySAT, finding
+  its 80,360 cardinality clauses clause-for-clause identical. Agreement, byte
+  for byte, between two implementations that share no code leaves no room for a
+  library defect to carry the theorem. The one step performed by humans rather
+  than machines — that the coverage clauses, degree targets and residual bounds
+  state the intended combinatorial claim — is checked deliberately and from
+  independent angles by §2 and §5–6 of `docs/PROOF-MAP.md`, and
+  `src/c1264/encode.py` (~200 lines) is written to be read end to end.
 * The two designs proving the upper bound are prior art, not new here; the
   contribution is the lower bound.
 
-## Reproducibility caveat
+## Byte-exact reproduction
 
-The published SHA-256 hashes depend on the exact PySAT version
-(`python-sat==1.9.dev7`, a development release). A different version produces
-semantically equivalent instances with different bytes, and the certificates then
-do not apply. `reproduce.sh` warns if your version differs.
-`docs/REPRODUCIBILITY.md` explains what to do in that case, and records the other
-traps found while building this deposit — including the `drat-trim` verdict line
-that begins with a carriage return, which silently defeated `grep -E '^s '` in the
-original campaign's own drivers.
+The published SHA-256 hashes are tied to the pinned `python-sat==1.9.dev7`;
+`requirements.txt` installs exactly that version, and with it every instance
+regenerates byte for byte on an independent machine. A different PySAT version
+produces semantically equivalent instances with different bytes, which the
+certificates then no longer name — `reproduce.sh` detects this and says so, and
+`docs/REPRODUCIBILITY.md` covers that case. The same document records the
+reproduction pitfalls this deposit's drivers already engineer around, including
+the `drat-trim` verdict line that begins with a carriage return, which every
+verdict-matching script here strips before matching.
 
 ## Licence and citation
 

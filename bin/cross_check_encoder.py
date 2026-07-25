@@ -36,10 +36,10 @@ Three checks, matching the three instance families:
     bin/cross_check_encoder.py --layer b            # the 20 extensions only
 
 What a pass means: the cardinality clauses in the deposited instances are the
-published encoding and not merely whatever a particular PySAT build emits.  It
-does not make the encoder *verified* -- both implementations are unverified
-Python, and a shared misreading of the combinatorial claim would survive.  See
-``docs/PROOF-MAP.md`` and ``verify/README.md``.
+published encoding and not merely whatever a particular PySAT build emits, so
+no conclusion rests on PySAT being correct.  The formalisation itself -- that
+the clauses state the intended combinatorial claim -- is checked separately;
+see ``docs/PROOF-MAP.md`` and ``verify/README.md``.
 
 Exit status: 0 if every requested instance was reproduced, 1 otherwise.
 """

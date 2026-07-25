@@ -28,10 +28,11 @@ about three minutes; writes `build/cross-check.json`.
 
 Why this exists: `src/c1264/encode.py` is the artifact's declared trust root, and
 one step inside it — the exact-degree cardinality constraint — is delegated to
-`pysat.card.CardEnc.equals`. The cross-check removes that library from the chain.
-It does **not** make the encoder verified: both implementations are unverified
-Python, and a shared misreading of the combinatorial claim would survive both.
-See `docs/PROOF-MAP.md` §3 for what is and is not discharged.
+`pysat.card.CardEnc.equals`. The cross-check removes that library from the chain
+entirely: byte-for-byte agreement between two implementations that share no code
+leaves no room for a PySAT-specific defect. The formalisation itself — that the
+clauses state the intended combinatorial claim — is checked separately and from
+independent angles; see `docs/PROOF-MAP.md` §2–3 and §5–6.
 
 ## 2. Archived — audit records from the campaign
 

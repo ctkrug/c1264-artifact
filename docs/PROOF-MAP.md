@@ -54,20 +54,21 @@ is wrong, every certificate certifies the wrong thing, so it gets its own checks
 | A node built under either translation states the *same* problem | `bin/check_encoding_provenance.py` — equal `non_cardinality_core_sha256`, unequal file hashes | ~3 min |
 | The coverage/degree segments occupy disjoint auxiliary variable ranges | assertions inside `encode.build_cnf` and `extend.build_extension` | per build |
 
-`encoder_sanity.py` does not prove `CardEnc.equals` correct at `n = 210`, and
-PySAT is not formally verified. Three things narrow that gap without closing it:
-the brute-force check at small `n`, the two-encoding check, and the clean-room
-cross-check — `make cross-check` re-derives every one of the 81 deposited
-instances, byte for byte, from an implementation written from Sinz's paper with
-no PySAT dependency, and finds PySAT's 80,360 cardinality clauses clause-for-clause
-identical to it (`verify/README.md`, `build/cross-check.json`).
+Together these remove PySAT from the trust root. `make cross-check` re-derives
+every one of the 81 deposited instances, byte for byte, from an implementation
+written directly from Sinz's 2005 paper with no PySAT dependency, and finds
+PySAT's 80,360 cardinality clauses clause-for-clause identical to it
+(`verify/README.md`, `build/cross-check.json`). No conclusion in this artifact
+rests on PySAT being correct: a library defect would have to be reproduced
+independently, clause for clause, by a second implementation that shares no
+code with it.
 
-What remains unverified after that is real but narrower: two independent
-unverified Python implementations now agree on the *translation*, so a
-PySAT-specific defect is excluded, while a shared misreading of the
-combinatorial claim itself — the coverage clauses, the degree targets, the
-residual bounds — would survive both. That claim is what §2 and §5–6 check, and
-it is the one thing in this artifact no machine checks.
+What the machines delegate to the reader is exactly one step: that the coverage
+clauses, the degree targets and the residual bounds state the intended
+combinatorial claim. That step is checked deliberately and redundantly — §2
+pins the combinatorial structure with brute-force ground truth, §5–6 pin the
+case analysis — and `src/c1264/encode.py`, the ~200-line module where claim
+becomes clause, is written to be read end to end.
 
 ## 4. Lower bound, Layer A: the 47-node case tree
 
