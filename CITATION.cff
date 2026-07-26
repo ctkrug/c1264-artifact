@@ -29,8 +29,8 @@ keywords:
   - cake_lpr
   - computer-assisted proof
 license: MIT
-version: 1.0.0
-date-released: "2026-07-25"
+version: 1.0.1
+date-released: "2026-07-26"
 references:
   - type: software
     title: cake_lpr

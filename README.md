@@ -45,10 +45,22 @@ here and in `make help` were measured on an Apple M-series laptop under CPython
 Tier 2 is the one that matters for a referee. A hash match there binds the source
 to the published formulas. For 80 primary certificates the checked formula is
 that sequential baseline. The largest case, `s-r0-2`, instead carries a
-`cake_lpr` certificate for its kmtotalizer translation; the manifest binds both
-translations to the same non-cardinality core, and the sequential translation
-was separately solved and accepted by `drat-trim`. Tier 2 also checks that the 47
-case-tree nodes plus the 14 auxiliary instances genuinely cover every branch.
+`cake_lpr` certificate for its kmtotalizer translation; that exact checked CNF is
+deposited at `data/cnf-checked/s-r0-2.kmtotalizer.cnf`. The manifest also binds
+both translations to the same non-cardinality core, and the sequential
+translation was separately solved and accepted by `drat-trim`. Tier 2 checks
+that the 47 case-tree nodes plus the 14 auxiliary instances genuinely cover
+every branch.
+
+After downloading the separate certificate archive, audit all 81 proof-to-CNF
+pairings without replaying the large proofs:
+
+```bash
+python bin/replay_deposit.py /path/to/c1264-certificates-v1.0.0.tar
+```
+
+Add `--replay frontier/s-r0-1` for a representative full
+DRAT-to-LRAT-to-`cake_lpr` replay, or `--replay all` for the complete campaign.
 
 ## The argument in one page
 
@@ -119,6 +131,7 @@ Three things then have to be shown, and each is a layer of this artifact:
       verify_cover.py         upper-bound checker A (Python, bitmask)
       verify_cover.c          upper-bound checker B (C, no shared code)
       certify.sh              solve + drat-trim + cake_lpr, fail-closed
+      replay_deposit.py       map/replay the already-deposited 81 DRAT proofs
       make_manifest.sh        regenerate MANIFEST.sha256
 
     data/
@@ -162,8 +175,9 @@ compared without storing them.
 
 One asymmetry is called out rather than smoothed over: for node `s-r0-2` the
 `cake_lpr` certificate is against the `kmtotalizer` instance, because the
-sequential proof (2.2 GB raw) was replayed but not retained. `data/frontier.json`
-records this in the node's `certificate.note`, and
+sequential proof (2.2 GB raw) was replayed but not retained. The exact
+kmtotalizer CNF is deposited in `data/cnf-checked/`; `data/frontier.json`
+records the encoding in the node's `certificate.note`, and
 `tests/test_manifests.py::test_exactly_one_node_is_certified_under_the_second_encoding`
 pins it so it cannot be quietly lost.
 

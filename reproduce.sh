@@ -97,6 +97,10 @@ step "encoder sanity"        "$PYTHON" bin/encoder_sanity.py --quiet
 
 # --- tier 2 ---------------------------------------------------------------
 step "47 frontier instances" "$PYTHON" bin/gen_instances.py --out "$OUT/cnf"
+step "checked s-r0-2 kmtotalizer CNF" \
+                             "$PYTHON" bin/gen_instances.py \
+                             --out "$OUT/cnf-checked" --encoding kmtotalizer \
+                             --no-hash-check --nodes s-r0-2
 step "14 auxiliary instances" "$PYTHON" bin/gen_auxiliary.py --out "$OUT/cnf-aux"
 step "20 extension instances" "$PYTHON" bin/gen_extensions.py --out "$OUT/cnf-ext"
 step "blocker audit"         "$PYTHON" bin/audit_blocker.py --json "$OUT/audit.json"
@@ -130,13 +134,14 @@ if [ "$failed" -eq 0 ]; then
 All reproducible-without-a-solver claims check out on this machine:
 
   * C(12,6,4) <= 41    fully established here (two independent checkers).
-  * C(12,6,4) >= 41    NOT established here.  What is established is that all 81
-                       CNF instances the lower bound rests on regenerate byte for
-                       byte from this source, so the deposited proof certificates
-                       apply to exactly these files, and that the case analysis
+  * C(12,6,4) >= 41    NOT established here.  What is established is that the
+                       exact checked CNF for each of the 81 deposited proofs
+                       regenerates byte for byte from this source (including the
+                       kmtotalizer exception s-r0-2), and that the case analysis
                        over them is exhaustive and the blockers are licensed.
                        The refutations themselves are certificates: re-check them
-                       with bin/certify.sh (CPU-days, ~200 GB scratch).
+                       with bin/replay_deposit.py and the certificate archive
+                       (CPU-days for all 81; large scratch).
   * the encoder        every one of those 81 files was also rebuilt here by a
                        clean-room cardinality encoder importing no PySAT, and
                        came out byte-identical (build/cross-check.json).

@@ -75,6 +75,12 @@ which additionally covers the 81 pre-generated CNFs and the run records the zip
 ships so a referee need not regenerate them. Each is self-consistent; do not
 check one distribution against the other's manifest.
 
+The source form also carries the one non-baseline checked formula,
+`data/cnf-checked/s-r0-2.kmtotalizer.cnf`. The retained proof for this node is
+against that formula, not against the sequential file in the 81-file baseline
+bundle. `bin/replay_deposit.py` makes this exceptional mapping explicit and
+audits all 81 proof-to-CNF hashes before it will replay any proof.
+
 ### Byte-stable check records
 
 Two of the things a run writes into `build/` are not logs but findings:

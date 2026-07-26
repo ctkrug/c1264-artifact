@@ -86,6 +86,15 @@ def test_checked_cnf_hash_is_the_published_one_except_for_that_node():
         assert cert["checked_cnf_sha256"] == record["cnf_sha256"], node
 
 
+def test_exceptional_checked_cnf_is_deposited():
+    import hashlib
+
+    path = DATA / "cnf-checked" / "s-r0-2.kmtotalizer.cnf"
+    assert path.is_file()
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    assert actual == FRONTIER["s-r0-2"]["certificate"]["checked_cnf_sha256"]
+
+
 @pytest.mark.parametrize(
     "manifest,field",
     [(FRONTIER, "cnf_sha256"), (AUXILIARY, "cnf_sha256"), (EXTENSIONS, "cnf_sha256")],
