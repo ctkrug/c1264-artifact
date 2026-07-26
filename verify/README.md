@@ -57,7 +57,7 @@ analysis during the campaign and are kept for the same reason:
 
 | verdict file | result |
 | --- | --- |
-| `independent-branch-space.json` | branch space independently derived as 247, matching the campaign's claim; 47 frontier nodes are distinct branches (33 tertiary, 6 r0, 8 r1) |
+| `independent-branch-space.json` | historical, superseded attempt that repeated the campaign's global branch count; do not use it for branch accounting |
 | `independent-branch-space-corrected.json` | see below |
 | `independent-region-completeness.json` | `VERDICT_ALL_REGIONS_COMPLETE: true`; for every region, the orbits negated by a tail instance are a subset of the orbits individually closed by a solved UNSAT job |
 | `independent-tail-attribution.json` | per-region attribution of which tail closes which orbits |
@@ -70,8 +70,8 @@ own bookkeeping, and it is stated here rather than buried:
 
 > `finding: "branch tree is COMPLETE; campaign over-counted the r1 region"`
 
-The campaign reported 247 branches, of which 68 in the r = 1 region. The true
-number of legal r = 1 secondary orbits is **60**. The cause: the secondary orbits
+The campaign's global branch count is not used in the proof. The corrected audit
+works region by region. The number of legal r = 1 secondary orbits is **60**. The cause: the secondary orbits
 were enumerated on a pool that included root-orbit-0 blocks, which the r = 1
 canonical constraint (no orbit-0 block present) forbids. The consequence is that
 16 individual r1 jobs collapse onto 12 distinct legal orbits — four were
@@ -80,8 +80,6 @@ duplicates.
 This direction of error is harmless: a **superset** of the required branches was
 solved, so no branch was left open. The file records both
 `VERDICT_frontier_completeness_REDERIVED: true` and
-`VERDICT_no_branch_left_open: true`, and the corrected partition is
-122 tertiary + 38 r0-secondary + 60 r1-secondary, with r ≥ 2 closed by the single
-symmetry-free instance `r2plus-b20`. A referee comparing the paper's branch
-arithmetic against this file will find the discrepancy; it is a counting error in
-the write-up of the case analysis, not a gap in it.
+`VERDICT_no_branch_left_open: true`. The corrected audit checks 122 tertiary
+orbits, 38 non-expanded r0-secondary orbits, and 60 r1-secondary orbits, with
+r ≥ 2 closed by the single symmetry-free instance `r2plus-b20`.
