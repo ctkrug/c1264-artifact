@@ -13,6 +13,12 @@ deposited here as a hash-identified certificate. Nothing is taken on the word of
 solver: every refutation is a proof object that was replayed by `drat-trim` and
 then re-checked by `cake_lpr`, whose own correctness is a theorem in HOL4.
 
+The accompanying paper is [arXiv:2607.23766](https://arxiv.org/abs/2607.23766)
+(also archived as doi:10.5281/zenodo.21573863). This artifact is deposited at
+Zenodo under concept DOI
+[10.5281/zenodo.21572069](https://doi.org/10.5281/zenodo.21572069); the 2.3 GB
+certificate archive is record 10.5281/zenodo.21573716.
+
 ## Quick start
 
 ```bash

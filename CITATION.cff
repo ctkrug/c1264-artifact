@@ -31,6 +31,21 @@ keywords:
 license: MIT
 version: 1.0.1
 date-released: "2026-07-26"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21572069"
+    description: Zenodo concept DOI for this artifact (resolves to the latest version)
+  - type: other
+    value: "arXiv:2607.23766"
+    description: arXiv identifier of the accompanying paper
+preferred-citation:
+  type: article
+  title: "The covering number C(12, 6, 4) is 41"
+  authors:
+    - family-names: Krug
+      given-names: Charlie
+  year: 2026
+  doi: "10.48550/arXiv.2607.23766"
 references:
   - type: software
     title: cake_lpr
